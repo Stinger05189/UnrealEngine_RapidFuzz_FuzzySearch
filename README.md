@@ -1,7 +1,7 @@
 
 # Unreal Engine RapidFuzz FuzzySearch Plugin
 
-![RapidFuzz Library Icon](RapidFuzz_FuzzySearch/Resources/IconFull.png "RapidFuzz Library Icon")
+![RapidFuzz Library Icon](Resources/IconFull.png)
 This plugin integrates the powerful string matching capabilities of the RapidFuzz C++ library into Unreal Engine 5.2, providing a seamless and efficient way to perform fuzzy string comparisons directly within the engine. RapidFuzz is a fast, MIT-licensed library designed for fuzzy string matching, offering various algorithms to calculate the similarity between sequences of characters.
 
 ## Overview
