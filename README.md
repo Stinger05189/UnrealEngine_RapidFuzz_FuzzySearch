@@ -1,6 +1,7 @@
 
 # Unreal Engine RapidFuzz FuzzySearch Plugin
 
+![RapidFuzz Library Icon](RapidFuzz_FuzzySearch/Resources/IconFull.png "RapidFuzz Library Icon")
 This plugin integrates the powerful string matching capabilities of the RapidFuzz C++ library into Unreal Engine 5.2, providing a seamless and efficient way to perform fuzzy string comparisons directly within the engine. RapidFuzz is a fast, MIT-licensed library designed for fuzzy string matching, offering various algorithms to calculate the similarity between sequences of characters.
 
 ## Overview
@@ -19,6 +20,10 @@ This plugin exposes several functions from the RapidFuzz library to Blueprints a
 - **RapidFuzzPartialTokenSetRatio**: Calculates similarity for partial matches with token duplicity.
 - **RapidFuzzWRatio**: Provides a weighted similarity score, combining various strategies.
 - **RapidFuzzQRatio**: Offers a quick similarity assessment.
+- **SortStringsBySimilarity**: Sorts strings by their direct similarity to a query, placing the closest matches first. Suitable for straightforward similarity-based ordering.
+- **SortStringsByPartialSimilarity**: Sorts strings by resemblance to a reference text, prioritizing those with the most matching content. Ideal for highlighting partial matches in search results or filters.
+- **SortStringsByPartialTokenSetSimilarity**: Sorts strings to prioritize those most similar to a query, effectively handling extra or shuffled words. Great for flexible 'best fit' searches.
+
 
 Each function is designed to be easily accessible from both Blueprints and C++, making them versatile for numerous use cases.
 
