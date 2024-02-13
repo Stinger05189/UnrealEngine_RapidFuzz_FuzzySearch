@@ -15,44 +15,37 @@ class RAPIDFUZZ_FUZZYSEARCH_API UFuzzySearchLibrary : public UBlueprintFunctionL
 	GENERATED_BODY()
 	
 		public:
-    // Function to sort an array of strings based on similarity to a query string
-    UFUNCTION(BlueprintCallable, Category = "RapidFuzz|StringMatching")
+    UFUNCTION(BlueprintCallable, Category = "RapidFuzz|StringSorting", meta = (ToolTip = "Sorts strings by their direct similarity to a query, placing the closest matches first. Suitable for straightforward similarity-based ordering."))
         static TArray<FString> SortStringsBySimilarity(const TArray<FString>& StringArray, const FString& Query);
 
-    //Sorts an array of strings based on their partial similarity to a query string.
-    UFUNCTION(BlueprintCallable, Category = "RapidFuzz|StringMatching")
+    UFUNCTION(BlueprintCallable, Category = "RapidFuzz|StringSorting", meta = (ToolTip = "Sorts strings by resemblance to a reference text, prioritizing those with most matching content. Ideal for highlighting partial matches in search results or filters."))
         static TArray<FString> SortStringsByPartialSimilarity(const TArray<FString>& StringArray, const FString& Query);
 
-    // Calculates the similarity ratio between two strings.
-    UFUNCTION(BlueprintCallable, Category = "RapidFuzz|StringMatching")
+    UFUNCTION(BlueprintCallable, Category = "RapidFuzz|StringSorting", meta = (ToolTip = "Sorts strings to prioritize those most similar to a query, effectively handling extra or shuffled words. Great for flexible 'best fit' searches."))
+        static TArray<FString> SortStringsByPartialTokenSetSimilarity(const TArray<FString>& StringArray, const FString& Query);
+
+    UFUNCTION(BlueprintCallable, Category = "RapidFuzz|StringComparison", meta = (ToolTip = "Computes how similar two strings are, returning a score from 0 to 100. Perfect for exact match comparisons."))
         static float RapidFuzzRatio(const FString& Source, const FString& Target);
 
-    // find the best partial match between strings, which can be useful for applications requiring leniency in matching.
-    UFUNCTION(BlueprintCallable, Category = "RapidFuzz|StringMatching")
+    UFUNCTION(BlueprintCallable, Category = "RapidFuzz|StringComparison", meta = (ToolTip = "Determines the similarity of the most similar substring, useful for matching shorter phrases within longer texts."))
         static float RapidFuzzPartialRatio(const FString& Source, const FString& Target);
 
-    // Computes the similarity ratio between strings after tokenizing, sorting, and rejoining the tokens, making it useful for comparisons where word order is not important.
-    UFUNCTION(BlueprintCallable, Category = "RapidFuzz|StringMatching")
+    UFUNCTION(BlueprintCallable, Category = "RapidFuzz|StringComparison", meta = (ToolTip = "Measures similarity, ignoring token order. Ideal for sentences with mixed-up words."))
         static float RapidFuzzTokenSortRatio(const FString& Source, const FString& Target);
 
-    // Similar to token_sort_ratio, but optimized for situations where duplicate words may be present and should not negatively impact the similarity score.
-    UFUNCTION(BlueprintCallable, Category = "RapidFuzz|StringMatching")
+    UFUNCTION(BlueprintCallable, Category = "RapidFuzz|StringComparison", meta = (ToolTip = "Assesses similarity considering token duplicity, best for texts with repeated words."))
         static float RapidFuzzTokenSetRatio(const FString& Source, const FString& Target);
 
-    // Allows for partial matches in the context of tokenized, sorted, and rejoined strings, providing a more flexible comparison mechanism.
-    UFUNCTION(BlueprintCallable, Category = "RapidFuzz|StringMatching")
+    UFUNCTION(BlueprintCallable, Category = "RapidFuzz|StringComparison", meta = (ToolTip = "Evaluates partial match similarity, disregarding token order. For flexible matching with mixed words."))
         static float RapidFuzzPartialTokenSortRatio(const FString& Source, const FString& Target);
 
-    // Combines the benefits of token set ratio calculations with the leniency of partial matching, suitable for applications requiring high tolerance in matching criteria.
-    UFUNCTION(BlueprintCallable, Category = "RapidFuzz|StringMatching")
+    UFUNCTION(BlueprintCallable, Category = "RapidFuzz|StringComparison", meta = (ToolTip = "Calculates similarity for partial matches with token duplicity, optimizing for texts with repetitions."))
         static float RapidFuzzPartialTokenSetRatio(const FString& Source, const FString& Target);
 
-    // Offers a weighted combination of various similarity ratios, tailored to achieve more accurate matching in complex scenarios.
-    UFUNCTION(BlueprintCallable, Category = "RapidFuzz|StringMatching")
+    UFUNCTION(BlueprintCallable, Category = "RapidFuzz|StringComparison", meta = (ToolTip = "Provides a weighted similarity score, combining various strategies for a comprehensive comparison."))
         static float RapidFuzzWRatio(const FString& Source, const FString& Target);
 
-    // Provides a quick similarity ratio calculation, optimized for performance while still delivering reliable match scores.
-    UFUNCTION(BlueprintCallable, Category = "RapidFuzz|StringMatching")
+    UFUNCTION(BlueprintCallable, Category = "RapidFuzz|StringComparison", meta = (ToolTip = "Offers a quick similarity assessment, streamlined for performance without compromising accuracy."))
         static float RapidFuzzQRatio(const FString& Source, const FString& Target);
 
 };

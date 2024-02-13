@@ -99,6 +99,44 @@ TArray<FString> UFuzzySearchLibrary::SortStringsByPartialSimilarity(const TArray
     return SortedArray;
 }
 
+TArray<FString> UFuzzySearchLibrary::SortStringsByPartialTokenSetSimilarity(const TArray<FString>& StringArray, const FString& Query)
+{
+    // Vector to hold pairs of FString and their corresponding similarity scores
+    std::vector<std::pair<FString, double>> StringsWithScores;
+
+    // Convert FString query to std::string for RapidFuzz compatibility
+    std::string QueryStd(TCHAR_TO_UTF8(*Query));
+
+    // Calculate partial token set similarity scores for each string
+    for (const FString& String : StringArray)
+    {
+        std::string StringStd(TCHAR_TO_UTF8(*String));
+        double Score = static_cast<double>(rapidfuzz::fuzz::partial_token_set_ratio(QueryStd, StringStd));
+
+        // Store each string along with its similarity score
+        StringsWithScores.emplace_back(String, Score);
+    }
+
+    // Sort the strings by their similarity scores in descending order
+    std::sort(StringsWithScores.begin(), StringsWithScores.end(),
+              [](const std::pair<FString, double>& A, const std::pair<FString, double>& B) {
+                  return A.second > B.second;
+              });
+
+    // Create a TArray to return the sorted strings
+    TArray<FString> SortedArray;
+    SortedArray.Reserve(StringsWithScores.size());
+
+    // Fill the TArray with the sorted strings
+    for (const auto& Pair : StringsWithScores)
+    {
+        SortedArray.Add(Pair.first);
+    }
+
+    // Return the TArray of sorted strings
+    return SortedArray;
+}
+
 float UFuzzySearchLibrary::RapidFuzzRatio(const FString& Source, const FString& Target)
 {
     std::string src(TCHAR_TO_UTF8(*Source));
